@@ -64,7 +64,9 @@ class _HomePageState extends State<HomePage> {
 
         List<Contact> getSortedList(int index) {
           List<Contact> contatList = (state.contactList!
-              .where((element) => element.name.startsWith(indice[index], 0))
+              .where((element) => element.name
+                  .toLowerCase()
+                  .startsWith(indice[index].toLowerCase(), 0))
               .toList());
           if (contatList != null) {
             contatList = contatList..sort((a, b) => a.name.compareTo(b.name));
@@ -112,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                           child: TextFormField(
                             keyboardType: TextInputType.name,
                             onChanged: (value) {
-                              if (RegExp(r"[a-z]").hasMatch(value)) {
+                              if (RegExp(r"[a-zA-Z]").hasMatch(value)) {
                                 filter = value;
                               } else {
                                 filter = null;

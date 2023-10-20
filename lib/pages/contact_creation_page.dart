@@ -65,7 +65,7 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
       contactPhone = widget.contact!.phone;
     }
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -86,158 +86,160 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
             },
             icon: Icon(Icons.arrow_back)),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: InkWell(
-              onTap: () async {
-                final ImagePicker _picker = ImagePicker();
-                XFile? photo =
-                    await _picker.pickImage(source: ImageSource.gallery);
-                if (photo != null) {
-                  var path =
-                      (await path_provider.getApplicationDocumentsDirectory())
-                          .path;
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: InkWell(
+                onTap: () async {
+                  final ImagePicker _picker = ImagePicker();
+                  XFile? photo =
+                      await _picker.pickImage(source: ImageSource.gallery);
+                  if (photo != null) {
+                    var path =
+                        (await path_provider.getApplicationDocumentsDirectory())
+                            .path;
 
-                  String fileName = basename(photo.path);
+                    String fileName = basename(photo.path);
 
-                  // CroppedFile croppedFile = (await ImageCropper().cropImage(
-                  //   sourcePath: photo.path,
-                  //   aspectRatioPresets: [
-                  //     CropAspectRatioPreset.square,
-                  //     CropAspectRatioPreset.ratio3x2,
-                  //     CropAspectRatioPreset.original,
-                  //     CropAspectRatioPreset.ratio4x3,
-                  //     CropAspectRatioPreset.ratio16x9
-                  //   ],
-                  //   uiSettings: [
-                  //     AndroidUiSettings(
-                  //         toolbarTitle: 'Cropper',
-                  //         toolbarColor: Colors.deepOrange,
-                  //         toolbarWidgetColor: Colors.white,
-                  //         initAspectRatio: CropAspectRatioPreset.original,
-                  //         lockAspectRatio: false),
-                  //     IOSUiSettings(
-                  //       title: 'Cropper',
-                  //     ),
-                  //     WebUiSettings(
-                  //       context: context,
-                  //     ),
-                  //   ],
-                  // ))!;
+                    // CroppedFile croppedFile = (await ImageCropper().cropImage(
+                    //   sourcePath: photo.path,
+                    //   aspectRatioPresets: [
+                    //     CropAspectRatioPreset.square,
+                    //     CropAspectRatioPreset.ratio3x2,
+                    //     CropAspectRatioPreset.original,
+                    //     CropAspectRatioPreset.ratio4x3,
+                    //     CropAspectRatioPreset.ratio16x9
+                    //   ],
+                    //   uiSettings: [
+                    //     AndroidUiSettings(
+                    //         toolbarTitle: 'Cropper',
+                    //         toolbarColor: Colors.deepOrange,
+                    //         toolbarWidgetColor: Colors.white,
+                    //         initAspectRatio: CropAspectRatioPreset.original,
+                    //         lockAspectRatio: false),
+                    //     IOSUiSettings(
+                    //       title: 'Cropper',
+                    //     ),
+                    //     WebUiSettings(
+                    //       context: context,
+                    //     ),
+                    //   ],
+                    // ))!;
 
-                  contactImagePath = photo.path;
+                    contactImagePath = photo.path;
 
-                  print("Path= " + contactImagePath.toString());
-                  await photo.saveTo("$path/$fileName");
-                  setState(() {});
-                }
-              },
-              child: CircleAvatar(
-                  radius: 90,
-                  child: contactImagePath != null
-                      ? Stack(
-                          children: [
-                            Image.file(
-                              File(contactImagePath!),
-                            ),
-                            Positioned(
-                              right: 10,
-                              height: 10,
-                              child: Icon(
-                                Icons.replay_outlined,
-                                size: 60,
+                    print("Path= " + contactImagePath.toString());
+                    await photo.saveTo("$path/$fileName");
+                    setState(() {});
+                  }
+                },
+                child: CircleAvatar(
+                    radius: 90,
+                    child: contactImagePath != null
+                        ? Stack(
+                            children: [
+                              Image.file(
+                                File(contactImagePath!),
                               ),
-                            ),
-                          ],
-                        )
-                      : Icon(
-                          Icons.add_a_photo,
-                          size: 70,
-                        )),
-            ),
-          ),
-          Form(
-            key: _form,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-              child: Column(
-                children: [
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    initialValue: contactPhone,
-                    maxLength: 11,
-                    validator: numberValidate,
-                    onSaved: (newValue) => contactPhone = newValue,
-                    decoration: InputDecoration(
-                      labelText: "Phone number",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    initialValue: contactName,
-                    validator: nameValidate,
-                    onSaved: (newValue) => contactName = newValue,
-                    decoration: InputDecoration(
-                      labelText: "Name",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    initialValue: contactEmail,
-                    onSaved: (newValue) => contactEmail = newValue,
-                    decoration: InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                  ),
-                ],
+                              Positioned(
+                                right: 10,
+                                height: 10,
+                                child: Icon(
+                                  Icons.replay_outlined,
+                                  size: 60,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Icon(
+                            Icons.add_a_photo,
+                            size: 70,
+                          )),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (_form.currentState!.validate()) {
-                _form.currentState!.save();
-                if (widget.contact == null) {
-                  widget.contact = Contact(
-                    name: contactName!,
-                    phone: contactPhone!,
-                    isFavorite: 0,
-                    email: contactEmail,
-                    imagePath: contactImagePath,
-                  );
-                  widget.onCreate(widget.contact!);
-                  Navigator.pop(context);
-                } else {
-                  widget.onUpdate(widget.contact!.copyWith(
-                    email: contactEmail,
-                    imagePath: contactImagePath,
-                    name: contactName,
-                    phone: contactPhone,
-                  ));
-                  Navigator.pop(context);
+            Form(
+              key: _form,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      initialValue: contactPhone,
+                      maxLength: 11,
+                      validator: numberValidate,
+                      onSaved: (newValue) => contactPhone = newValue,
+                      decoration: InputDecoration(
+                        labelText: "Phone number",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.name,
+                      initialValue: contactName,
+                      validator: nameValidate,
+                      onSaved: (newValue) => contactName = newValue,
+                      decoration: InputDecoration(
+                        labelText: "Name",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      initialValue: contactEmail,
+                      onSaved: (newValue) => contactEmail = newValue,
+                      decoration: InputDecoration(
+                        labelText: "Email",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_form.currentState!.validate()) {
+                  _form.currentState!.save();
+                  if (widget.contact == null) {
+                    widget.contact = Contact(
+                      name: contactName!,
+                      phone: contactPhone!,
+                      isFavorite: 0,
+                      email: contactEmail,
+                      imagePath: contactImagePath,
+                    );
+                    widget.onCreate(widget.contact!);
+                    Navigator.pop(context);
+                  } else {
+                    widget.onUpdate(widget.contact!.copyWith(
+                      email: contactEmail,
+                      imagePath: contactImagePath,
+                      name: contactName,
+                      phone: contactPhone,
+                    ));
+                    Navigator.pop(context);
+                  }
                 }
-              }
-            },
-            child: Text("OK"),
-          ),
-        ],
+              },
+              child: Text("OK"),
+            ),
+          ],
+        ),
       ),
     );
   }
