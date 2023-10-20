@@ -50,13 +50,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = PageController(
-      initialPage: 0,
-      keepPage: true,
-    );
+    String? filter;
+    String? filterFavorite;
 
     return BlocBuilder<HomePageBloc, HomePageState>(
       builder: (context, state) {
+        List<Contact> searchFilter(List<Contact> contactList, String filter) {
+          return contactList
+              .where((element) =>
+                  element.name.toLowerCase().startsWith(filter.toLowerCase()))
+              .toList();
+        }
+
         List<Contact> getSortedList(int index) {
           List<Contact> contatList = (state.contactList!
               .where((element) => element.name.startsWith(indice[index], 0))
@@ -96,48 +101,63 @@ class _HomePageState extends State<HomePage> {
             SafeArea(
               child: Column(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Add contact button
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ContactCreationPage(
-                            onCreate: onCreate,
-                            onUpdate: onUpdate,
-                            onDelete: onDelete,
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(color: Colors.grey[800]),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          child: TextFormField(
+                            keyboardType: TextInputType.name,
+                            onChanged: (value) {
+                              if (RegExp(r"[a-z]").hasMatch(value)) {
+                                filter = value;
+                              } else {
+                                filter = null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                            ),
                           ),
                         ),
-                      );
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      decoration: BoxDecoration(color: Colors.grey[900]),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.person_add,
-                            color: Colors.white,
+
+                        // Add contact button
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ContactCreationPage(
+                                  onCreate: onCreate,
+                                  onUpdate: onUpdate,
+                                  onDelete: onDelete,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.person_add,
+                                  color: Colors.white,
+                                ),
+                                Text('Create a new contact'),
+                              ],
+                            ),
                           ),
-                          Text('Create a new contact'),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  // indice letter
+                  //  indice letter
                   Expanded(
                     child: ListView.builder(
                         itemCount: indice.length,
@@ -145,6 +165,9 @@ class _HomePageState extends State<HomePage> {
                           List<Contact> indiceList = state.contactList == null
                               ? []
                               : getSortedList(index);
+                          filter != null && filter != ""
+                              ? indiceList = searchFilter(indiceList, filter!)
+                              : indiceList;
 
                           return ContactListWidget(
                             letter: indice[index],
@@ -165,6 +188,14 @@ class _HomePageState extends State<HomePage> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      onChanged: (value) {
+                        if (RegExp(r"[a-z]").hasMatch(value)) {
+                          filterFavorite = value;
+                        } else {
+                          filterFavorite = null;
+                        }
+                      },
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
@@ -183,6 +214,11 @@ class _HomePageState extends State<HomePage> {
                             : getSortedList(index)
                                 .where((element) => element.isFavorite == 1)
                                 .toList();
+
+                        filterFavorite != null && filterFavorite != ""
+                            ? indiceList =
+                                searchFilter(indiceList, filterFavorite!)
+                            : indiceList;
 
                         return ContactListWidget(
                           letter: indice[index],

@@ -118,7 +118,7 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
                               height: 10,
                               child: Icon(
                                 Icons.replay_outlined,
-                                size: 40,
+                                size: 60,
                               ),
                             ),
                           ],

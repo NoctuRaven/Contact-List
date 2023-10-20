@@ -117,14 +117,25 @@ class _ContactPageState extends State<ContactPage> {
                   Column(
                     children: [
                       ElevatedButton(
-                          onPressed: () {}, child: Icon(Icons.phone)),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        onPressed: () {},
+                        child: Icon(Icons.phone),
+                      ),
                       Text("Call"),
                     ],
                   ),
                   Column(
                     children: [
                       ElevatedButton(
-                          onPressed: () {}, child: Icon(Icons.message)),
+                        style: ElevatedButton.styleFrom(
+                            shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        onPressed: () {},
+                        child: Icon(Icons.message),
+                      ),
                       Text("Message"),
                     ],
                   )
@@ -143,6 +154,7 @@ class _ContactPageState extends State<ContactPage> {
                         widget.contact.phone != "",
                     replacement: Container(),
                     child: ListTile(
+                      leading: Icon(Icons.phone),
                       title: Text(
                         widget.contact.phone.toString(),
                       ),
@@ -153,6 +165,7 @@ class _ContactPageState extends State<ContactPage> {
                         widget.contact.email != "",
                     replacement: Container(),
                     child: ListTile(
+                      leading: Icon(Icons.email),
                       title: Text(
                         widget.contact.email.toString(),
                       ),

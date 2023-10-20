@@ -43,7 +43,7 @@ class ContactListWidget extends StatelessWidget {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.grey[600],
-            border: Border.all(),
+            // border: Border.all(),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Row(
