@@ -39,6 +39,7 @@ dependencies:
   brasil_fields: ^1.10.0
   sqflite: ^2.2.0
   gallery_saver: ^2.3.2
+  image_cropper: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

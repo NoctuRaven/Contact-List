@@ -5,6 +5,7 @@ import 'package:contact_list/pages/contact_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -92,17 +93,43 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
             child: InkWell(
               onTap: () async {
                 final ImagePicker _picker = ImagePicker();
-                final XFile? photo =
+                XFile? photo =
                     await _picker.pickImage(source: ImageSource.gallery);
                 if (photo != null) {
                   var path =
                       (await path_provider.getApplicationDocumentsDirectory())
                           .path;
+
                   String fileName = basename(photo.path);
 
-                  contactImagePath = photo.path;
-                  print("Path= " + contactImagePath.toString());
+                  // CroppedFile croppedFile = (await ImageCropper().cropImage(
+                  //   sourcePath: photo.path,
+                  //   aspectRatioPresets: [
+                  //     CropAspectRatioPreset.square,
+                  //     CropAspectRatioPreset.ratio3x2,
+                  //     CropAspectRatioPreset.original,
+                  //     CropAspectRatioPreset.ratio4x3,
+                  //     CropAspectRatioPreset.ratio16x9
+                  //   ],
+                  //   uiSettings: [
+                  //     AndroidUiSettings(
+                  //         toolbarTitle: 'Cropper',
+                  //         toolbarColor: Colors.deepOrange,
+                  //         toolbarWidgetColor: Colors.white,
+                  //         initAspectRatio: CropAspectRatioPreset.original,
+                  //         lockAspectRatio: false),
+                  //     IOSUiSettings(
+                  //       title: 'Cropper',
+                  //     ),
+                  //     WebUiSettings(
+                  //       context: context,
+                  //     ),
+                  //   ],
+                  // ))!;
 
+                  contactImagePath = photo.path;
+
+                  print("Path= " + contactImagePath.toString());
                   await photo.saveTo("$path/$fileName");
                   setState(() {});
                 }
@@ -112,7 +139,9 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
                   child: contactImagePath != null
                       ? Stack(
                           children: [
-                            Image.file(File(contactImagePath!)),
+                            Image.file(
+                              File(contactImagePath!),
+                            ),
                             Positioned(
                               right: 10,
                               height: 10,

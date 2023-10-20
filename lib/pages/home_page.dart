@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(color: Colors.grey[800]),
+                    // decoration: BoxDecoration(color: Colors.grey[800]),
                     child: Column(
                       children: [
                         Padding(

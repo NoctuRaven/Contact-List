@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../bloc/home_page_bloc/home_page_event.dart';
 
 class ContactPage extends StatefulWidget {
@@ -37,6 +37,28 @@ class _ContactPageState extends State<ContactPage> {
     widget.isFavorite = !widget.isFavorite!;
     widget.contact.isFavorite = widget.isFavorite! ? 1 : 0;
     setState(() {});
+  }
+
+  Future<void> _launchUrl(Uri _url) async {
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+  Future<void> _sendSMS(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'sms',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
   }
 
   @override
@@ -121,7 +143,11 @@ class _ContactPageState extends State<ContactPage> {
                             backgroundColor: Colors.green,
                             shape: BeveledRectangleBorder(
                                 borderRadius: BorderRadius.circular(20))),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _makePhoneCall(widget.contact.phone);
+                          });
+                        },
                         child: Icon(Icons.phone),
                       ),
                       Text("Call"),
@@ -133,7 +159,11 @@ class _ContactPageState extends State<ContactPage> {
                         style: ElevatedButton.styleFrom(
                             shape: BeveledRectangleBorder(
                                 borderRadius: BorderRadius.circular(20))),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            _sendSMS(widget.contact.phone);
+                          });
+                        },
                         child: Icon(Icons.message),
                       ),
                       Text("Message"),
