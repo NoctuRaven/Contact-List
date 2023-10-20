@@ -1,16 +1,28 @@
 # contact_list
 
-A new Flutter project.
+A Contact list App with call and sms options, using SQlite as database and Bloc for state management.  
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- List whit index, search bar and favorite list
+<p align="center">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/001.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/002.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/003.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/004.png" width="350">
+</p>
+- Contact page with options for "favorite","delete","edite","make call" and "send sms".
+<p align="center">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/005.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/006.png" width="350">
+</p>
+- Create/edite page
+<p align="center">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/007.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/008.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/009.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/010.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/011.png" width="350">
+  <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/012.png" width="350">
+</p>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
