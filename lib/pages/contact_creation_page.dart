@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:contact_list/models/contact_model.dart';
 import 'package:contact_list/pages/contact_page.dart';
+import 'package:contact_list/widgets/change_avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -95,74 +96,57 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: InkWell(
-                focusColor: Colors.white,
-                customBorder: CircleBorder(),
-                onTap: () async {
-                  final ImagePicker _picker = ImagePicker();
-                  XFile? photo =
-                      await _picker.pickImage(source: ImageSource.gallery);
-                  if (photo != null) {
-                    var path =
-                        (await path_provider.getApplicationDocumentsDirectory())
-                            .path;
+                  focusColor: Colors.white,
+                  customBorder: CircleBorder(),
+                  onTap: () async {
+                    final ImagePicker _picker = ImagePicker();
+                    XFile? photo =
+                        await _picker.pickImage(source: ImageSource.gallery);
+                    if (photo != null) {
+                      var path = (await path_provider
+                              .getApplicationDocumentsDirectory())
+                          .path;
 
-                    String fileName = basename(photo.path);
+                      String fileName = basename(photo.path);
 
-                    // CroppedFile croppedFile = (await ImageCropper().cropImage(
-                    //   sourcePath: photo.path,
-                    //   aspectRatioPresets: [
-                    //     CropAspectRatioPreset.square,
-                    //     CropAspectRatioPreset.ratio3x2,
-                    //     CropAspectRatioPreset.original,
-                    //     CropAspectRatioPreset.ratio4x3,
-                    //     CropAspectRatioPreset.ratio16x9
-                    //   ],
-                    //   uiSettings: [
-                    //     AndroidUiSettings(
-                    //         toolbarTitle: 'Cropper',
-                    //         toolbarColor: Colors.deepOrange,
-                    //         toolbarWidgetColor: Colors.white,
-                    //         initAspectRatio: CropAspectRatioPreset.original,
-                    //         lockAspectRatio: false),
-                    //     IOSUiSettings(
-                    //       title: 'Cropper',
-                    //     ),
-                    //     WebUiSettings(
-                    //       context: context,
-                    //     ),
-                    //   ],
-                    // ))!;
+                      // CroppedFile croppedFile = (await ImageCropper().cropImage(
+                      //   sourcePath: photo.path,
+                      //   aspectRatioPresets: [
+                      //     CropAspectRatioPreset.square,
+                      //     CropAspectRatioPreset.ratio3x2,
+                      //     CropAspectRatioPreset.original,
+                      //     CropAspectRatioPreset.ratio4x3,
+                      //     CropAspectRatioPreset.ratio16x9
+                      //   ],
+                      //   uiSettings: [
+                      //     AndroidUiSettings(
+                      //         toolbarTitle: 'Cropper',
+                      //         toolbarColor: Colors.deepOrange,
+                      //         toolbarWidgetColor: Colors.white,
+                      //         initAspectRatio: CropAspectRatioPreset.original,
+                      //         lockAspectRatio: false),
+                      //     IOSUiSettings(
+                      //       title: 'Cropper',
+                      //     ),
+                      //     WebUiSettings(
+                      //       context: context,
+                      //     ),
+                      //   ],
+                      // ))!;
+                      // if (croppedFile.path != null) {
+                      //   photo = XFile(croppedFile.path);
+                      // }
+                      print("Path= " + contactImagePath.toString());
 
-                    print("Path= " + contactImagePath.toString());
-                    await photo.saveTo("$path/$fileName");
-                    setState(() {
-                      contactImagePath = photo.path;
-                    });
-                  }
-                },
-                child: CircleAvatar(
-                    radius: 90,
-                    child: contactImagePath != null
-                        ? Stack(
-                            children: [
-                              Image.file(
-                                File(contactImagePath!),
-                              ),
-                              Positioned(
-                                right: 10,
-                                height: 10,
-                                child: Icon(
-                                  Icons.replay_outlined,
-                                  size: 60,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Icon(
-                            Icons.add_a_photo,
-                            size: 70,
-                          )),
-              ),
+                      await photo.saveTo("$path/$fileName");
+                      setState(() {
+                        contactImagePath = photo.path;
+                      });
+                    }
+                  },
+                  child: ChangeAvatarWidget(
+                    contactImagePath: contactImagePath,
+                  )),
             ),
             Form(
               key: _form,

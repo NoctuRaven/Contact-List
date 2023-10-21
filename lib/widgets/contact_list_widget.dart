@@ -52,9 +52,12 @@ class ContactListWidget extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    child: contact.imagePath != null
-                        ? Image.file(File(contact.imagePath!))
-                        : Text(contact.name[0]),
+                    backgroundImage: contact.imagePath != null
+                        ? FileImage(File(contact.imagePath!))
+                        : null,
+                    child: contact.imagePath == null
+                        ? Text(contact.name[0])
+                        : null,
                   ),
                   SizedBox(
                     width: 5,

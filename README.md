@@ -18,7 +18,7 @@ A Contact list App with call and sms options, using SQlite as database and Bloc 
   <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/006.png" width="350">
 </p>
 
-- Create/edite page
+- Create/edit page
 <p align="center">
   <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/007.png" width="350">
   <img src="https://github.com/NoctuRaven/Contact-List/blob/main/assets/images/008.png" width="350">

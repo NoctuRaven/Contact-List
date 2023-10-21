@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../bloc/home_page_bloc/home_page_event.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class ContactPage extends StatefulWidget {
   Contact contact;
@@ -105,12 +106,15 @@ class _ContactPageState extends State<ContactPage> {
                   children: [
                     CircleAvatar(
                       radius: 125,
-                      child: widget.contact.imagePath != null
-                          ? Image.file(File(widget.contact.imagePath!))
-                          : Text(
+                      backgroundImage: widget.contact.imagePath != null
+                          ? FileImage(File(widget.contact.imagePath!))
+                          : null,
+                      child: widget.contact.imagePath == null
+                          ? Text(
                               widget.contact.name[0],
                               style: const TextStyle(fontSize: 100),
-                            ),
+                            )
+                          : null,
                     ),
                     const SizedBox(
                       height: 10,
