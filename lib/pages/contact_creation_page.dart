@@ -95,6 +95,9 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: InkWell(
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
+                customBorder: CircleBorder(),
                 onTap: () async {
                   final ImagePicker _picker = ImagePicker();
                   XFile? photo =
