@@ -51,10 +51,8 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
     return null;
   }
 
-  getUserPhoto() {}
-
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     if (widget.contact != null) {
       contactName = widget.contact!.name;
       contactEmail = widget.contact!.email;
@@ -64,6 +62,11 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
       }
       contactPhone = widget.contact!.phone;
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -128,11 +131,11 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
                     //   ],
                     // ))!;
 
-                    contactImagePath = photo.path;
-
                     print("Path= " + contactImagePath.toString());
                     await photo.saveTo("$path/$fileName");
-                    setState(() {});
+                    setState(() {
+                      contactImagePath = photo.path;
+                    });
                   }
                 },
                 child: CircleAvatar(
