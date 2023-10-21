@@ -109,38 +109,38 @@ class _ContactCreationPageState extends State<ContactCreationPage> {
 
                       String fileName = basename(photo.path);
 
-                      // CroppedFile croppedFile = (await ImageCropper().cropImage(
-                      //   sourcePath: photo.path,
-                      //   aspectRatioPresets: [
-                      //     CropAspectRatioPreset.square,
-                      //     CropAspectRatioPreset.ratio3x2,
-                      //     CropAspectRatioPreset.original,
-                      //     CropAspectRatioPreset.ratio4x3,
-                      //     CropAspectRatioPreset.ratio16x9
-                      //   ],
-                      //   uiSettings: [
-                      //     AndroidUiSettings(
-                      //         toolbarTitle: 'Cropper',
-                      //         toolbarColor: Colors.deepOrange,
-                      //         toolbarWidgetColor: Colors.white,
-                      //         initAspectRatio: CropAspectRatioPreset.original,
-                      //         lockAspectRatio: false),
-                      //     IOSUiSettings(
-                      //       title: 'Cropper',
-                      //     ),
-                      //     WebUiSettings(
-                      //       context: context,
-                      //     ),
-                      //   ],
-                      // ))!;
-                      // if (croppedFile.path != null) {
-                      //   photo = XFile(croppedFile.path);
-                      // }
+                      CroppedFile croppedFile = (await ImageCropper().cropImage(
+                        sourcePath: photo.path,
+                        aspectRatioPresets: [
+                          CropAspectRatioPreset.square,
+                          CropAspectRatioPreset.ratio3x2,
+                          CropAspectRatioPreset.original,
+                          CropAspectRatioPreset.ratio4x3,
+                          CropAspectRatioPreset.ratio16x9
+                        ],
+                        uiSettings: [
+                          AndroidUiSettings(
+                              toolbarTitle: 'Cropper',
+                              toolbarColor: Colors.deepOrange,
+                              toolbarWidgetColor: Colors.white,
+                              initAspectRatio: CropAspectRatioPreset.original,
+                              lockAspectRatio: false),
+                          IOSUiSettings(
+                            title: 'Cropper',
+                          ),
+                          WebUiSettings(
+                            context: context,
+                          ),
+                        ],
+                      ))!;
+                      if (croppedFile.path != null) {
+                        photo = XFile(croppedFile.path);
+                      }
                       print("Path= " + contactImagePath.toString());
 
                       await photo.saveTo("$path/$fileName");
                       setState(() {
-                        contactImagePath = photo.path;
+                        contactImagePath = photo!.path;
                       });
                     }
                   },
